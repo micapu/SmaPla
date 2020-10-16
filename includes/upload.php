@@ -10,10 +10,7 @@ if(!isset($_SESSION['u_uid'])){
 if(!file_exists(dirname(getcwd(),2)."/users")){
     mkdir(dirname(getcwd(),2)."\\users");
 }
-function mb_basename($file)
-{
-    return end(explode('/',$file));
-}
+
 $targetDir = dirname(getcwd(),2)."/users/".$_SESSION['u_uid']."/";
 
 $failed = array();
@@ -23,8 +20,8 @@ $count = count($_FILES['filetoUpload']['tmp_name']);
 require_once "connection.php";
 for($i=0; $i<=$count; $i++) {
     $FILE = isset($_FILES['filetoUpload']['name'][$i]) ? array('name' => mysqli_real_escape_string($conn,$_FILES['filetoUpload']['name'][$i]),'size' => $_FILES['filetoUpload']['size'][$i],'error' => $_FILES['filetoUpload']['error'][$i],'tmp_name' => $_FILES['filetoUpload']['tmp_name'][$i]): null;
-    $targetFile = $targetDir . mb_basename($FILE["name"]);
-    $similarFiles = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM songs WHERE songname = '".mb_basename($FILE["name"])."' AND user_id=".$_SESSION['u_id'].";"));
+    $targetFile = $targetDir . basename($FILE["name"]);
+    $similarFiles = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM songs WHERE songname = '".basename($FILE["name"])."' AND user_id=".$_SESSION['u_id'].";"));
     if($similarFiles>0||file_exists($targetFile)||(!$FILE['error']==0)||$FILE['size']>70000000||!in_array(strtolower(pathinfo($targetFile,PATHINFO_EXTENSION)),$AllowedTypes)){
         array_push($failed, $FILE);
         continue;

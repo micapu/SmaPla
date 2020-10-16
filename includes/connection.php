@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password="";
+$password="159!*DBx";
 $dbName = "smartmusicplayer";
 $conn = new mysqli($servername,$username,$password,$dbName);
 if($conn->connect_error){

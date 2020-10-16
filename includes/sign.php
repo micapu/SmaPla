@@ -4,7 +4,7 @@ session_start();
 if(!file_exists(dirname(getcwd(),2)."/users")){
     mkdir(dirname(getcwd(),2)."/users");
 }
-
+// Checks for the existence of the users folder in the folder above the directory of this script. If it doesn't exist, make it since it will be needed later.
 function error($msg){
     header("Location: ../index.php?resp=".$msg);
     exit();
@@ -17,8 +17,8 @@ function signOut(){
 
 function signin(){
     include_once "connection.php";
-    $username = $_POST['uname'];
-    $password = $_POST['pwd'];
+    $username = mysqli_real_escape_string($conn,$_POST['uname']);
+    $password =  mysqli_real_escape_string($conn,$_POST['pwd']);
     $result = mysqli_query($conn,"SELECT * FROM users WHERE user_uid='$username' OR user_email='$username';");
     if($row = mysqli_fetch_assoc($result)){
         if(password_verify($password,$row['user_pwd'])){
@@ -27,6 +27,7 @@ function signin(){
             $_SESSION['u_last'] = $row['user_last'];
             $_SESSION['u_email'] = $row['user_email'];
             $_SESSION['u_uid'] = $row['user_uid'];
+            $_SESSION["timeout"] = time()+ (30*24 * 60 * 60);
         }
         else{
             error("error");

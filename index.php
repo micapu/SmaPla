@@ -14,6 +14,7 @@ if(isset($_SESSION['u_id'])){
     <body>
         <div class = "container center">
             <h1>Not Logged In</h1>
+            <h2 id="welcome">SmaPla (Smart Player) is an intelligent music player which intends to provide better music playing experiences for heavy users and easier music playing experience for causal users.</h2>
             <button id="sign-in">Sign In</button>
             <button id="sign-up">Sign Up</button>
             <div class = "container sign-in">
@@ -40,8 +41,8 @@ if(isset($_SESSION['u_id'])){
                 </form>
 
             </div>
-        </div>
-        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        </div><script src="http://code.jquery.com/jquery-latest.min.js"
+                      type="text/javascript"></script>
         <script type="text/javascript" src="signpage.js"></script>
     </body>
 </html>

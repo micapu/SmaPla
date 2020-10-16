@@ -2,10 +2,13 @@
 
 
 session_start();
+require_once("connection.php");
+
 if (!isset($_SESSION['u_uid'])) {
     exit();
-} if (isset($_GET['getfiles'])) {
-    require_once("connection.php");
+}
+$uid = $_SESSION['u_id'];
+if (isset($_GET['getfiles'])) {
     $result = mysqli_query($conn, "SELECT * FROM songs WHERE user_id = " . $_SESSION['u_id'] . ";");
     $songs = Array();
     while ($row = mysqli_fetch_assoc($result)) {
@@ -23,18 +26,40 @@ if (!isset($_SESSION['u_uid'])) {
     echo(json_encode(Array("songs" =>$songs, "activities"=>$activies)));
     exit();
 }
+
+if(isset($_GET['songhistory'])){
+    $activity = mysqli_real_escape_string($conn,$_GET['songhistory']);
+    $earliest = date_timestamp_get(date_create())*1000-5400000;
+    $played = 0;
+    $skipped = 0;
+    $history = mysqli_query($conn,"(SELECT * FROM log WHERE user_id = $uid AND activityID = $activity AND currentTime > $earliest ORDER BY currentTime DESC LIMIT 25) ORDER BY currentTime ASC;");
+    $songs = Array();
+    while($v = mysqli_fetch_assoc($history)){
+        $data = json_decode($v['details']);
+        if($data->reward>0&&$played<300){
+            array_push($songs,Array('id'=>$v['songID'],'weight'=>$data->reward));
+            $played++;
+        }
+        elseif ($data->reward<0&&$skipped<1000){
+            array_push($songs,Array('id'=>$v['songID'],'weight'=>$data->reward));
+            $skipped++;
+        }
+        elseif($played+$skipped>=1300){
+            break;
+        }
+    }
+    echo(json_encode($songs));
+}
 function error($msg){
     echo($msg);
     exit();
 }
 
 if(isset($_POST['event'])){
-    require_once "connection.php";
     mysqli_query($conn,"INSERT INTO activities(user_id,JSON) VALUES (".$_SESSION['u_id'].",'".mysqli_real_escape_string($conn,$_POST['event'])."');");
     exit();
 }
 if(isset($_POST['log'])){
-    require_once("connection.php");
     foreach($_POST as $k=>$v){
         $_POST[$k] = mysqli_real_escape_string($conn,$v);
     }
@@ -48,7 +73,6 @@ if(isset($_POST['log'])){
     exit();
 }
 if(isset($_POST['activityID'])){
-    require_once "connection.php";
     if(isset($_POST['JSONdata'])){
         $result = mysqli_query($conn,"UPDATE activities SET JSON = '".mysqli_real_escape_string($conn,$_POST['JSONdata'])."' WHERE activityID = ".mysqli_real_escape_string($conn,$_POST['activityID'])."; ");
         exit();
@@ -62,7 +86,6 @@ function data($code, $data){
     exit();
 }
 if(isset($_POST['songName'])){
-    require_once "connection.php";
     foreach($_POST as $k => $v){
         $_POST[$k] = mysqli_real_escape_string($conn,$v);
     }
@@ -194,7 +217,6 @@ function mb_basename($file)
 }
 
 if (isset($_SERVER["PATH_INFO"])) {
-    require_once("connection.php");
     /*
     $rf = false;
     if(substr($_SERVER['PATH_INFO'],0,3)=='/f/'){
