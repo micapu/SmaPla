@@ -1,0 +1,193 @@
+*{
+	font-family: arial;/*
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;*/
+}
+html,body {
+	padding: 0;
+	margin:0px;
+    height:100%;
+}
+.container.main{
+
+	display: inline-block;
+	height: 90%;
+	width: 100%;
+	margin-bottom:10%;
+}
+.navbar{
+	float:left;
+	display: inline-block;
+	width: 10%;
+	height: 100%;
+	background-color: black;
+}
+.container.user .btn{
+	font-size: 2vh;
+	text-align: right;
+	padding-right: 1em;
+	display:block;
+	margin-left:auto;
+	margin-right: auto;
+	margin-top: 5%;
+	border-radius: 10px;
+	border-color: black;
+	border-style: solid;
+	border-width: 4px;
+	width: 80%;
+	height: 30%;
+	background-color: white;
+}
+.container.user{
+	background-color: red;
+	height:15%;
+}
+.container.songlist{
+	float: left;
+	height: 100%;
+	width: 89.5%;
+
+}
+#title{
+	margin-left: 10%;
+	width:50%;
+	display:inline-block;
+}
+.container.songs{
+	margin-left: 10%;
+	display: inline-block;
+	width: 35%;
+	height: 60%;
+}
+.container.song{
+	display: block;
+	width: 100%;
+	height: 30%;
+}
+.song,.weight{
+	text-align: left;
+	background: none;
+	line-height: 30px;
+	list-style:none; 
+	display: inline-block;
+	float:left;
+	width: 40%;
+}
+.song{
+	padding-left: 2%;
+
+}
+.weight{
+	height:10%;
+	float:left;
+	margin-left:3%;
+	width:10%;
+}
+
+.container.control{
+	display: block;
+}
+.container.control *{
+	display: inline-block;
+}
+#slider{
+	width:600px;
+	height:10px;
+}
+#volume{
+	display:inline-block;
+	margin-top:50px;
+	width:100px;
+	height:10px;
+}
+.container.center{
+	margin-left:auto;
+	margin-right: auto;
+	height:100%;
+	width:50%;
+
+}
+.center h1{
+	text-align: center;
+	font-size: 50px;
+}
+.center button{
+	position:relative;
+	z-index: 50;
+	margin-top:12%;
+	height:80px;
+	width:180px;
+	font-size:30px;
+
+
+}
+
+.sign-in,.sign-up{
+	display:none;
+	margin-top:30%;
+
+}
+#sign-in{
+	float:left;
+	margin-left: 30%;
+}
+#sign-up{
+	float:right;
+	margin-right:30%;
+}
+#sign-in-form *, #sign-up-form *{
+	display:block;
+	font-size:20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left:auto;
+	margin-right:auto;
+	width:300px;
+	height:30px;
+}
+
+#sign-error, #reg-error{
+	display: none;
+}
+#sign-in-form{
+	margin-top:15px;
+}
+#sign-up-form{
+	margin-top:15px;
+}
+
+.graph.container{
+	float:right;
+	width :45%;
+	display:inline-block;
+	margin-top:0;
+	height: 80%;
+}
+.canvas{
+	width: 70%;
+	height: 30%;
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+	border-style:solid;
+	border-color: black;
+	border-width: 1px;
+
+}
+
+#events{
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-top:10%;
+	width:100%;
+	height:50%;
+}
+#events *{
+	display:block;
+	margin-bottom:3%;
+	width:60%;
+	text-align: left;
+	padding-left:5%;
+}
